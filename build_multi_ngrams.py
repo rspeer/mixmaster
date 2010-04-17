@@ -6,8 +6,6 @@ from bag_of_letters import make_bag
 import cPickle as pickle
 import os.path
 
-max_coanagrams=10
-
 #Want the higher frequency to win
 def bagtuple_compare(tuple):
     return -tuple[2]
@@ -30,7 +28,6 @@ def ngram_data():
                         # we found a better anagram, let's see if it stays in the top n
                         ngrams[bagnum].append(bagtuple)
                         ngrams[bagnum].sort(key=bagtuple_compare)
-                        ngrams[bagnum]=ngrams[bagnum][:10]
                         if bagtuple in ngrams[bagnum]:
                             print bagtuple
     return ngrams
