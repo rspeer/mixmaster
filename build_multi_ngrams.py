@@ -2,7 +2,7 @@
 # going to make you install it.
 
 import codecs
-from bag import bag as bagrepr
+from bag_of_letters import make_bag
 import cPickle as pickle
 import os.path
 
@@ -22,7 +22,7 @@ def ngram_data():
                 nwords = len(words)
                 if freq >= 10000:
                     text = ' '.join(words)
-                    bagnum = bagrepr(text)
+                    bagnum = make_bag(text)
                     bagtuple=(text, nwords, freq)
                     if bagnum not in ngrams:
                         ngrams[bagnum] = [bagtuple]
@@ -40,7 +40,7 @@ def ngrams_plus_dictionary():
     for line in open('enable1.txt'):
         if line.strip():
             text = line.strip().upper()
-            bagnum = bagrepr(text)
+            bagnum = make_bag(text)
             if bagnum not in ngrams:
                 ngrams[bagnum] = (text, 1, 100)
                 print text
@@ -71,7 +71,7 @@ def ngrams_plus_wikipedia():
             if chars:
                 text = ''.join(chars)
                 nwords = len(text.split())
-                bagnum = bagrepr(text)
+                bagnum = make_bag(text)
                 if (bagnum not in ngrams) or (ngrams[bagnum][2] < 1000):
                     ngrams[bagnum] = (text, nwords, 1000)
                     print text
