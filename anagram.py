@@ -1,12 +1,9 @@
 import string
 import cPickle as pickle
 from bag_of_letters import make_bag
+from download import open_or_download
 
-picklefile = open('anagram_data.pickle')
-ngrams = pickle.load(picklefile)
-picklefile.close()
-
-#ngrams = get_or_download_pickle('anagram_data.pickle', 'http://web.media.mit.edu/~rspeer/anagram_data.pickle.gz')
+ngrams = open_or_download('anagram_data.pickle', 'http://web.media.mit.edu/~rspeer/anagram_data.pickle.gz')
 
 keylist = ngrams.keys()
 keylist.sort()

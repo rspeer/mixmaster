@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """
-This representation comes from http://github.com/offby1/anagrams .
+This representation comes from http://github.com/offby1/anagrams . It
+represents an unordered set of letters as a bignum.
 """
 
 import string
@@ -16,7 +17,7 @@ letterfreq = "etaoinshrdlcumwfgypbvkjxqz"
 for let, prime in zip(letterfreq, primes):
     letters_to_primes[let] = prime
 
-def bag_of_letters (str):
+def make_bag (str):
     str = str.lower()
     rv = 1
 
