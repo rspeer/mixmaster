@@ -42,7 +42,7 @@ def ngrams_plus_dictionary():
             text = line.strip().upper()
             bagnum = make_bag(text)
             if bagnum not in ngrams:
-                ngrams[bagnum] = (text, 1, 100)
+                ngrams[bagnum] = [(text, 1, 100)]
                 print text
     return ngrams
 
@@ -73,7 +73,7 @@ def ngrams_plus_wikipedia():
                 nwords = len(text.split())
                 bagnum = make_bag(text)
                 if (bagnum not in ngrams) or (ngrams[bagnum][2] < 1000):
-                    ngrams[bagnum] = (text, nwords, 1000)
+                    ngrams[bagnum] = [(text, nwords, 1000)]
                     print text
     return ngrams
     

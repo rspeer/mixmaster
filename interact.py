@@ -8,7 +8,7 @@ def interact_loop():
             return
         best = simple_anagram(text)
         if best:
-            print "Best anagram:", best
+            print "Best anagram:", best[2]
         for goodness, freq, anagram in multi_anagram(text):
             if anagram != best:
                 print anagram
