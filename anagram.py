@@ -1,6 +1,6 @@
 import string
 import cPickle as pickle
-from bag import bag as bagrepr
+from bag_of_letters import make_bag
 
 picklefile = open('anagram_data.pickle')
 ngrams = pickle.load(picklefile)
@@ -13,7 +13,7 @@ def simple_anagram_numeric(bagnum):
     return ngrams.get(bagnum)
 
 def simple_anagram(text):
-    bagnum = bagrepr(text)
+    bagnum = make_bag(text)
     return simple_anagram_numeric(bagnum)
 
 def complex_anagram_gen(bagnum):
@@ -27,7 +27,7 @@ def complex_anagram_gen(bagnum):
                     yield text+' '+othertext, words+otherwords, freq*otherfreq
 
 def complex_anagram(text):
-    bagnum = bagrepr(text)
+    bagnum = make_bag(text)
     firsttry = simple_anagram_numeric(bagnum)
     if firsttry: return firsttry[0], 1, firsttry[2]
 
@@ -40,7 +40,7 @@ def complex_anagram(text):
         
 def multi_anagram(text, n=10):
     got = []
-    bagnum = bagrepr(text)
+    bagnum = make_bag(text)
     firsttry = simple_anagram_numeric(bagnum)
     if firsttry:
         got.append((-1, firsttry[2], firsttry[0]))
