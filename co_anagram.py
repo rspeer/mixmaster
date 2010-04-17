@@ -9,14 +9,16 @@ ngrams = open_or_download('coanagram_data.pickle', 'http://web.media.mit.edu/~rs
 keylist = ngrams.keys()
 keylist.sort()
 
+default_cutoff_factor=0.2
+
 def simple_anagram_numeric(bagnum):
-    return ngrams.get(bagnum)
+    return ngrams.get(bagnum, [])
 
 def simple_anagram(text):
     bagnum = make_bag(text)
     return simple_anagram_numeric(bagnum)
 
-def complex_anagram_gen(bagnum):
+def complex_anagram_gen(bagnum, cutoff_factor=default_cutoff_factor):
     for key in ngrams:
         if bagnum % key == 0:
             main_list=ngrams[key]           
@@ -24,8 +26,8 @@ def complex_anagram_gen(bagnum):
             other_list = simple_anagram_numeric(bagnum/key)
             if other_list:
                 other_freq=other_list[0][2]
-                main_textstr='['+('|'.join([tuple[0] for tuple in main_list]))+']'
-                other_textstr='['+('|'.join([tuple[0] for tuple in other_list]))+']'
+                main_textstr='['+('|'.join([tuple[0] for tuple in main_list if tuple[2] >= cutoff_factor*main_list[0][2]]))+']'
+                other_textstr='['+('|'.join([tuple[0] for tuple in other_list if tuple[2] >= cutoff_factor*other_list[0][2]]))+']'
                 # FIXME! Use better words representation after actually thinking
                 if main_freq <= other_freq:
                     yield main_textstr+' '+other_textstr, 0, main_freq*other_freq
@@ -42,13 +44,13 @@ def complex_anagram(text):
             besttext, bestfreq = text, freq
     return besttext, 2, bestfreq
         
-def multi_anagram(text, n=10):
+def multi_anagram(text, n=10, cutoff_factor=default_cutoff_factor):
     got = []
     bagnum = make_bag(text)
     firsttry = simple_anagram_numeric(bagnum)
-    if firsttry:
-        got.append((-1, firsttry[2], firsttry[0]))
-    for text, words, freq in complex_anagram_gen(bagnum):
+    for text, words, freq in firsttry:
+        got.append((-1, freq, text))
+    for text, words, freq in complex_anagram_gen(bagnum, cutoff_factor):
         got.append((-2, freq, text))
     got.sort()
     best = []
@@ -92,12 +94,12 @@ def wildcard_anagram(text, n=10):
             if len(used) >= n: break
     return best
 
-def anagram_dispatch(text):
+def anagram_dispatch(text, n=10, cutoff_factor=default_cutoff_factor):
     nblanks = text.count('?')
     if nblanks == 0:
-        return multi_anagram(text)
+        return multi_anagram(text, n, cutoff_factor)
     else:
-        return wildcard_anagram(text)
+        return wildcard_anagram(text, n, cutoff_factor)
 
 if __name__ == '__main__': demo()
 
