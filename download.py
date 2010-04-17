@@ -3,7 +3,7 @@ import cPickle as pickle
 
 def open_or_download(filename, URL):
     if not os.access(filename, os.F_OK):
-        if not prompt_for_download(filename, URL):
+        if not prompt_for_download(filename+'.gz', URL):
             raise SystemExit
     return pickle.load(open(filename))
 
