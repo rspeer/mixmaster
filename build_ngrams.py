@@ -1,6 +1,3 @@
-# At this point, this module is slightly unnecessarily interactive -- you work
-# with it at the iPython prompt and save what you get as a pickle.
-
 # This originally used a library for caching results in pickles, but I'm not
 # going to make you install it.
 
@@ -69,4 +66,7 @@ def ngrams_plus_wikipedia():
                     print text
     return ngrams
     
+out = open('anagram_data.pickle', 'wb')
+pickle.dump(ngrams_plus_dictionary(), out)
+out.close()
 
