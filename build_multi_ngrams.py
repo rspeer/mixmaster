@@ -77,7 +77,7 @@ def ngrams_plus_wikipedia():
                     print text
     return ngrams
     
-out = open('anagram_data.pickle', 'wb')
+out = open('coanagram_data.pickle', 'wb')
 pickle.dump(ngrams_plus_dictionary(), out)
 out.close()
 

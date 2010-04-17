@@ -3,7 +3,8 @@ import cPickle as pickle
 from bag_of_letters import make_bag
 from download import open_or_download
 
-ngrams = open_or_download('anagram_data.pickle', 'http://web.media.mit.edu/~rspeer/anagram_data.pickle.gz')
+# FIXME! Once data built, put in good link
+ngrams = open_or_download('coanagram_data.pickle', 'http://web.media.mit.edu/~rspeer/fake')
 
 keylist = ngrams.keys()
 keylist.sort()
@@ -18,12 +19,16 @@ def simple_anagram(text):
 def complex_anagram_gen(bagnum):
     for key in ngrams:
         if bagnum % key == 0:
-            text, words, freq = ngrams[key]
-            other = simple_anagram_numeric(bagnum/key)
-            if other:
-                othertext, otherwords, otherfreq = other
-                if freq <= otherfreq:
-                    yield text+' '+othertext, words+otherwords, freq*otherfreq
+            main_list=ngrams[key]           
+            main_freq=ngrams[key][0][2]
+            other_list = simple_anagram_numeric(bagnum/key)
+            if other_list:
+                other_freq=other_list[0][2]
+                main_textstr='['+('|'.join([tuple[0] for tuple in main_list]))+']'
+                other_textstr='['+('|'.join([tuple[0] for tuple in other_list]))+']'
+                # FIXME! Use better words representation after actually thinking
+                if main_freq <= other_freq:
+                    yield main_textstr+' '+other_textstr, 0, main_freq*other_freq
 
 def complex_anagram(text):
     bagnum = make_bag(text)
