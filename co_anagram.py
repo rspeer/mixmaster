@@ -58,7 +58,7 @@ def multi_anagram(text, n=10):
         ordered = ' '.join(sorted(text.split()))
         if ordered not in used:
             used.add(ordered)
-            best.append(text)
+            best.append(got[-i])
             if len(used) >= n: break
     return best
     
