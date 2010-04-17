@@ -6,6 +6,8 @@ picklefile = open('anagram_data.pickle')
 ngrams = pickle.load(picklefile)
 picklefile.close()
 
+#ngrams = get_or_download_pickle('anagram_data.pickle', 'http://web.media.mit.edu/~rspeer/anagram_data.pickle.gz')
+
 keylist = ngrams.keys()
 keylist.sort()
 
