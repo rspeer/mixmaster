@@ -21,16 +21,12 @@ def simple_anagram(text):
 def complex_anagram_gen(bagnum, cutoff_factor=default_cutoff_factor):
     for key in ngrams:
         if bagnum % key == 0:
-            main_list=ngrams[key]           
-            main_freq=ngrams[key][0][2]
-            other_list = simple_anagram_numeric(bagnum/key)
-            if other_list:
-                other_freq=other_list[0][2]
-                main_textstr='['+('|'.join([tuple[0] for tuple in main_list if tuple[2] >= cutoff_factor*main_list[0][2]]))+']'
-                other_textstr='['+('|'.join([tuple[0] for tuple in other_list if tuple[2] >= cutoff_factor*other_list[0][2]]))+']'
-                # FIXME! Use better words representation after actually thinking
-                if main_freq <= other_freq:
-                    yield main_textstr+' '+other_textstr, 0, main_freq*other_freq
+            main_list=ngrams[key]
+            for main_text, main_words, main_freq in main_list:
+                other_list = simple_anagram_numeric(bagnum/key)
+                for other_text, other_words, other_freq in other_list:
+                    yield (main_text+' '+other_text, main_words+other_words,
+                           min(main_freq, other_freq))
 
 def complex_anagram(text):
     bagnum = make_bag(text)

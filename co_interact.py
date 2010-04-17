@@ -1,4 +1,4 @@
-from anagram import *
+from co_anagram import *
 
 def interact_loop():
     num_results = 10
