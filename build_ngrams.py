@@ -26,7 +26,7 @@ def ngram_data():
 
 def ngrams_plus_dictionary():
     ngrams = ngram_data()
-    for line in open('enable.txt'):
+    for line in open('enable1.txt'):
         if line.strip():
             text = line.strip().upper()
             bagnum = make_bag(text)
