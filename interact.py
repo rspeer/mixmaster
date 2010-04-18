@@ -6,7 +6,8 @@ def interact_loop():
             text = raw_input('> ')
         except EOFError:
             return
-        best = simple_anagram(text)
+        if '?' in text: best = None
+        else: best = simple_anagram(text)
         if best:
             print "Best anagram:", best[2]
         for goodness, freq, anagram in multi_anagram(text):

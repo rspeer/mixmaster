@@ -12,9 +12,8 @@ def bagtuple_compare(tuple):
 
 def ngram_data():
     ngrams = {}
-    for filename in ['1grams.txt']:
-#    for filename in ['1grams.txt', '2grams.txt', '3grams.txt']:
-        for line in codecs.open('../../ngrams/'+filename, encoding='utf-8'):
+    for filename in ['1grams.txt', '2grams.txt', '3grams.txt']:
+        for line in codecs.open('ngrams/'+filename, encoding='utf-8'):
             if line.strip():
                 words, freq = eval(line)
                 nwords = len(words)
