@@ -4,7 +4,7 @@ from bag_of_letters import make_bag, unbag
 from download import open_or_download
 
 # FIXME! Once data built, put in good link
-ngrams = open_or_download('coanagram_data.pickle', 'http://web.media.mit.edu/~rspeer/fake')
+ngrams = open_or_download('coanagram_data.pickle', 'http://web.media.mit.edu/~rspeer/coanagram_data.pickle.gz')
 
 keylist = ngrams.keys()
 keylist.sort()
