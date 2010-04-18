@@ -2,7 +2,6 @@ from co_anagram import *
 
 def interact_loop():
     num_results = 10
-    cutoff = 0.2
     while True:
         try:
             text = raw_input('> ')
@@ -17,18 +16,12 @@ def interact_loop():
                     print "Will show %d results." % num_results
                 except ValueError:
                     print "Usage: /results [n]"
-            elif command == 'cutoff':
-                try:
-                    cutoff = float(arg)
-                    print "Setting cutoff to %s." % cutoff
-                except ValueError:
-                    print "Usage: /cutoff [factor]"
             continue
 
         best = simple_anagram(text)
         if best:
-            print "Best anagram:", best[2]
-        for goodness, freq, anagram in multi_anagram(text, num_results, cutoff):
+            print "Best anagram:", best[0][0]
+        for goodness, freq, anagram in multi_anagram(text, num_results):
             if anagram != best:
                 print anagram
 

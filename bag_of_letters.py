@@ -27,6 +27,14 @@ def make_bag (str):
 
     return rv
 
+def unbag(num):
+    out = []
+    for let, prime in zip(letterfreq, primes):
+        while num % prime == 0:
+            num /= prime
+            out.append(let)
+    return ''.join(out)
+
 def bags_equal (s1, s2):
     return s1 == s2
 

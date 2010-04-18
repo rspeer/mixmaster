@@ -27,6 +27,7 @@ def ngram_data():
                         # we found a better anagram, let's see if it stays in the top n
                         ngrams[bagnum].append(bagtuple)
                         ngrams[bagnum].sort(key=bagtuple_compare)
+                        ngrams[bagnum] = ngrams[bagnum][:3]
                         if bagtuple in ngrams[bagnum]:
                             print bagtuple
     return ngrams
