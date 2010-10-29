@@ -13,10 +13,10 @@ def alpha_empty (b):
 
 def make_alpha (str):
     str = str.lower()
-    counts = []; 
+    counts = []
 
     for i in range(0, 26):
-        counts.append(0);
+        counts.append(0)
 
     for c in str:
         if (c >= 'a') and (c <= 'z'):
@@ -25,6 +25,7 @@ def make_alpha (str):
     rv = "";
     for i in range(0, 26):
         for j in range(0, counts[i]):
-            rv += (chr(ord('a') + i));
+            rv += (chr(ord('a') + i))
 
-    return rv;
+    return rv
+
