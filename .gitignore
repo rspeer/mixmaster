@@ -1,2 +1,6 @@
 *.pyc
 *.pickle
+*.swp
+*.npy
+*.db
+*.db.gz
