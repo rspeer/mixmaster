@@ -1,6 +1,11 @@
 import numpy as np
 import heapq
 
+unigram_freq = np.array([.08167, .01492, .02782, .04253, .12702, .02228,
+.02015, .06094, .06966, .00153, .00772, .04025, .02406, .06749, .07507, .01929,
+.00095, .05987, .06327, .09056, .02758, .00978, .02360, .00150, .01974, .00074
+])
+
 def index(letter):
     "The index of a (capital) letter in the alphabet."
     return ord(letter) - ord('A')
@@ -23,6 +28,25 @@ def vec_to_letters(vec):
     for i in xrange(26):
         letters.append(vec[i] * chr(65+i))
     return ''.join(letters)
+
+def vec_anomaly(vec):
+    """
+    Given a vector of letters, return the difference between that letter
+    distribution and the expected letter distribution for that number of
+    letters.
+    """
+    expected = unigram_freq * np.sum(vec)
+    actual = np.asarray(vec, dtype=np.float64)
+    return actual - expected
+
+def vec_goodness(vec):
+    """
+    Given a vector of letters, estimate its suitability for anagramming
+    (as a negative number indicating log probability of forming a good
+    phrase).
+    """
+    anomaly = vec_anomaly(vec)
+    return np.sum(np.log(unigram_freq) * np.max(anomaly, 0))
 
 def find_pairs(matrix, ranks, vec):
     """
