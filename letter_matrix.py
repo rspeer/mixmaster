@@ -10,9 +10,9 @@ def letters_to_vec(letters):
     Convert a string made of capital letters into a vector of letter
     counts.
     """
-    vec = np.zeros((26,))
+    vec = np.zeros((26,), dtype=np.int8)
     for let in letters:
-        vec[index(letter)] += 1
+        vec[index(let)] += 1
     return vec
 
 def vec_to_letters(vec):
@@ -34,7 +34,7 @@ def find_pairs(matrix, ranks, vec):
         diff = vec - matrix[row]
         if np.all(diff >= 0):
             rank1 = ranks[row]
-            rank2 = find_vector(matrix, ranks, vec):
+            rank2 = find_vector(matrix, ranks, vec)
             if rank2 > 0:
                 part1 = vec_to_letters(matrix[row])
                 part2 = vec_to_letters(diff)
@@ -76,5 +76,4 @@ def top_pairs(matrix, ranks, vec, n):
 
     while heap:
         yield heapq.heappop(heap)
-
 
