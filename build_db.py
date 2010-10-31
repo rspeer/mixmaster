@@ -15,11 +15,12 @@ database = "db/anagrams.db"
 
 def setup_database(c):
     c.execute("create table anagrams (alphagram string, text string, nwords int, freq int)")
+    c.execute("create unique index anagrams_unique on anagrams (alphagram, text, nwords, freq)");
     for column in ('alphagram', 'text', 'freq'):
         c.execute("create index anagrams_%s on anagrams (%s)" % (column, column))
 
 def emit(c, alpha, text, nwords, freq):
-    c.execute("insert into anagrams values (?, ?, ?, ?)", (alpha, text, nwords, freq))
+    c.execute("insert or ignore into anagrams values (?, ?, ?, ?)", (alpha, text, nwords, freq))
     print alpha, text, nwords, freq
 
 def generate_ngram_data(c):
