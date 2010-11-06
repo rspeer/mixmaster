@@ -6,6 +6,9 @@ unigram_freq = np.array([.08167, .01492, .02782, .04253, .12702, .02228,
 .00095, .05987, .06327, .09056, .02758, .00978, .02360, .00150, .01974, .00074
 ])
 
+def parallel(x1, x2):
+    return int(1.0/(1.0/x1 + 1.0/x2))
+
 def index(letter):
     "The index of a (capital) letter in the alphabet."
     return ord(letter) - ord('A')
@@ -60,11 +63,11 @@ def find_pairs(matrix, ranks, vec):
     for row in good_rows:
         diff = diffs[row]
         rank1 = ranks[row]
-        rank2 = find_vector(matrix, ranks, vec)
+        rank2 = find_vector(matrix, ranks, diff)
         if rank2 > 0:
             part1 = vec_to_letters(matrix[row])
             part2 = vec_to_letters(diff)
-            yield min(rank1, rank2), part1, part2
+            yield parallel(rank1, rank2), part1, part2
 
 def find_vector(matrix, ranks, vec):
     """
