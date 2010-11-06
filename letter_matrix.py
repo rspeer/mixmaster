@@ -54,15 +54,17 @@ def find_pairs(matrix, ranks, vec):
     how good the various rows are as anagrams), find all pairs of rows that
     combine to the given `vec` of letters.
     """
-    for row in xrange(matrix.shape[0]):
-        diff = vec - matrix[row]
-        if np.all(diff >= 0):
-            rank1 = ranks[row]
-            rank2 = find_vector(matrix, ranks, vec)
-            if rank2 > 0:
-                part1 = vec_to_letters(matrix[row])
-                part2 = vec_to_letters(diff)
-                yield min(rank1, rank2), part1, part2
+    diffs = vec - matrix
+    margin = np.min(diffs, axis=-1)
+    good_rows = np.where(margin >= 0)[0]
+    for row in good_rows:
+        diff = diffs[row]
+        rank1 = ranks[row]
+        rank2 = find_vector(matrix, ranks, vec)
+        if rank2 > 0:
+            part1 = vec_to_letters(matrix[row])
+            part2 = vec_to_letters(diff)
+            yield min(rank1, rank2), part1, part2
 
 def find_vector(matrix, ranks, vec):
     """
@@ -74,11 +76,11 @@ def find_vector(matrix, ranks, vec):
     end = matrix.shape[0]
     while start < end:
         split = (start+end)/2
-        diff = matrix[split] - vec
+        diff = vec - matrix[split]
         if np.all(diff == 0):
             return ranks[split]
         else:
-            dir = diff[np.nonzero(diff)[0]]
+            dir = diff[np.nonzero(diff)[0][0]]
             if dir > 0:
                 start = split+1
             else:
@@ -97,7 +99,8 @@ def top_pairs(matrix, ranks, vec, n):
         heapq.heappush(heap, (rank, part1, part2))
         if found > n:
             heapq.heappop(heap)
-
-    while heap:
-        yield heapq.heappop(heap)
+    heap.sort()
+    heap.reverse()
+    print heap
+    return heap
 
