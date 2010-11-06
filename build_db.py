@@ -15,11 +15,12 @@ database = "db/anagrams.db"
 
 def setup_database(c):
     c.execute("create table anagrams (alphagram string, text string, nwords int, freq int)")
+    c.execute("create unique index anagrams_unique on anagrams (alphagram, text, nwords, freq)");
     for column in ('alphagram', 'text', 'freq'):
         c.execute("create index anagrams_%s on anagrams (%s)" % (column, column))
 
 def emit(c, alpha, text, nwords, freq):
-    c.execute("insert into anagrams values (?, ?, ?, ?)", (alpha, text, nwords, freq))
+    c.execute("insert or ignore into anagrams values (?, ?, ?, ?)", (alpha, text, nwords, freq))
     print alpha, text, nwords, freq
 
 def generate_ngram_data(c):
@@ -62,17 +63,17 @@ def generate_wikipedia(c):
                         chars.append(' ')
                         space = True
             if chars:
-                text = ''.join(chars)
+                text = ''.join(chars).strip()
                 nwords = len(text.split())
                 alpha = make_alpha(text)
                 emit(c, alpha, text, nwords, 10000*nwords)
 
 conn = sqlite3.connect(database)
 c = conn.cursor()
-#setup_database(c)
-#generate_ngram_data(c)
-#generate_dictionary(c)
+setup_database(c)
+generate_dictionary(c)
 generate_wikipedia(c)
+generate_ngram_data(c)
 conn.commit()
 c.close()
 

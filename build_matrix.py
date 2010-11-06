@@ -22,7 +22,7 @@ def build_matrix():
 def run():
     matrix, ranks = build_matrix()
     np.save('db/anagram_vectors.npy', matrix)
-    np.save('db/anagram_ranks.npy', matrix)
+    np.save('db/anagram_ranks.npy', ranks)
     return matrix, ranks
 
 if __name__ == '__main__':
