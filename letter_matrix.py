@@ -104,6 +104,5 @@ def top_pairs(matrix, ranks, vec, n):
             heapq.heappop(heap)
     heap.sort()
     heap.reverse()
-    print heap
     return heap
 

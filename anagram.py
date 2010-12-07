@@ -14,12 +14,18 @@ def simple_anagram(text):
     alpha = make_alpha(text)
     return list(get_anagrams(alpha))
 
-def multi_anagram(text, num=20):
+def multi_anagram(text, num=30):
     alpha = make_alpha(text)
     vec = letters_to_vec(alpha)
     heap = []
     used = set()
     found = 0
+    first_try = simple_anagram(text)
+    if first_try:
+        found += 1
+        text, freq = first_try[0]
+        heapq.heappush(heap, (freq*10, text))
+        used.add(text)
     for value, alpha1, alpha2 in top_pairs(matrix, ranks, vec, num):
         for text1, rank1 in get_anagrams(alpha1):
             for text2, rank2 in get_anagrams(alpha2):
@@ -34,7 +40,7 @@ def multi_anagram(text, num=20):
                         heapq.heappop(heap)
     heap.sort()
     heap.reverse()
-    return heap
+    return [(text, val) for (val, text) in heap]
 
 def demo():
     print multi_anagram('high ninja block move')
