@@ -1,0 +1,2 @@
+- big matrix of words as vectors
+- splitting an anagram requires searching for a vector sum in this space
